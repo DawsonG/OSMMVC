@@ -1,0 +1,15 @@
+{
+  "name": "osmmvc",
+  "description": "A super simple MVC pattern maker for Express.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Dawson Goodell",
+    "email": "DawsonG@osmstudios.com"
+  },
+  "keywords": [
+    "express",
+    "framework",
+    "mvc",
+    "app"
+  ]
+}
