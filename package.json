@@ -1,7 +1,8 @@
 {
   "name": "osmmvc",
   "description": "A super simple MVC pattern maker for Express.",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "license" : "MIT",
   "author": {
     "name": "Dawson Goodell",
     "email": "DawsonG@osmstudios.com"
@@ -11,5 +12,9 @@
     "framework",
     "mvc",
     "app"
-  ]
+  ],
+  "repository" :{ 
+    "type" : "git", 
+    "url" : "https://github.com/DawsonG/OSMMVC.git"
+  }
 }
