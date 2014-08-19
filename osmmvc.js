@@ -18,12 +18,14 @@ OSMMVC.prototype.routing = function(app, routing) {
 		var controller = null;
 		var action = null;
 		var input = { params:[], query:[]}; //input stores our extra parameters.
+		var params = req.params[0].split('/');
+
 
 		// Lets get our parameters if and only if they already exist
-		if (req.params.length >= 1) {
-			controller = req.params[0];
+		if (params.length >= 1) {
+			controller = params[0];
 			if (req.params.length >= 2) {
-				action = req.params[1];
+				action = params[1];
 			}
 		}
 
@@ -35,8 +37,8 @@ OSMMVC.prototype.routing = function(app, routing) {
 			action = "index";
 
 		// Get any additional parameters
-		if (req.params.length > 2) {
-			for (var i = 2; i < req.params.length; i++) {
+		if (params.length > 2) {
+			for (var i = 2; i < params.length; i++) {
 				input.params.push(req.params[i]);
 			}
 		}
