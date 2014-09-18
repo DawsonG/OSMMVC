@@ -1,7 +1,6 @@
 function OSMMVC() {
 	this.app = null;
 
-
 	this.preload = null;
 	this.postload = null;
 }
@@ -30,7 +29,7 @@ OSMMVC.prototype.routing = function(app, routing) {
 	app.all('/*', function(req, res) {
 		var controller = null;
 		var action = null;
-		var input = { params:[], query:[]}; //input stores our extra parameters.
+		var input = { params:[], query:[], body:[], user:{} }; //input stores our extra parameters.
 		var params = req.params[0].split('/');
 
 		// Lets get our parameters if and only if they already exist
@@ -60,6 +59,16 @@ OSMMVC.prototype.routing = function(app, routing) {
 			input.query = req.query;
 		}
 
+		// Add our user if need be
+		if (req.user) {
+			input.user = req.user;
+		}
+
+		// If we are posting we'll need the form body too.
+		if (req.method == 'POST' || req.method == 'PUT') {
+			input.body = req.body;
+		}
+
 		// Find the controller, make sure it exists, and get it
 		if (fs.existsSync(appDir + '/controllers/' + controller + '.js')) {
 			controller = require(appDir + '/controllers/' + controller);
@@ -81,8 +90,7 @@ OSMMVC.prototype.routing = function(app, routing) {
 		controller.setRes(res);
 
 		// Get the function
-		var fn = controller[action]; 
-		var params = {};
+		var fn = controller[action];
 
 		if(typeof fn === 'function') {
 			if(typeof self.preload === 'function') {

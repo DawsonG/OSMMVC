@@ -4,7 +4,7 @@ OSMMVC
 A super small, super light, routing magic plugin for creating MVC patterns in Node.js with Express.
 
 ## Usage
-Install osmmvc with `npm install osmmvc` or add it to your package.json depedencies `"dependencies": { "osmmvc": "1.0.1" }` and call `npm install`
+Install osmmvc with `npm install osmmvc` or add it to your package.json depedencies `"dependencies": { "osmmvc": "1.0.4" }` and call `npm install`
 
 Add the following lines to your application's main js file.  They must fall after any Express configuration.  `app` is the `express()` function return.
 ```
