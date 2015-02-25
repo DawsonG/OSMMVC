@@ -42,8 +42,8 @@ Controller.prototype.render = function(name, opts) {
 	this.res.render(name, lopts);
 };
 
-Controller.prototype.respond = function() {
-
+Controller.prototype.respond = function(opts) {
+	this.res.send(opts);
 };
 
 module.exports = Controller;
