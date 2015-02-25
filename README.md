@@ -4,7 +4,7 @@ OSMMVC
 A super small, super light, routing magic plugin for creating MVC patterns in Node.js with Express.
 
 ## Usage
-Install osmmvc with `npm install osmmvc` or add it to your package.json depedencies `"dependencies": { "osmmvc": "1.0.4" }` and call `npm install`
+Install osmmvc with `npm install osmmvc` or add it to your package.json depedencies `"dependencies": { "osmmvc": "1.1.0" }` and call `npm install`
 
 Add the following lines to your application's main js file.  They must fall after any Express configuration.  `app` is the `express()` function return.
 ```
@@ -30,13 +30,15 @@ var Controller = osmmvc.Controller;
 var MainController = new Controller();
 
 MainController.index = function() {
-	this.res.render('index', { title: 'The index page!', body: 'Common body stuff' });
+	this.render('index', { title: 'The index page!', body: 'Common body stuff' });
 }
 
 module.exports = MainController;
 ```
 
-Response and Request objects can be found in the `this.res` and `this.req` variables of the Controller object.  Use the response object to do anything you'd normally do in an Express path.
+You can render a layout through your normal Express renderer using `this.render` or send information using `this.respond`.  Using the render wrapper also passes the controller name, the called action, and the current date to your template.
+
+Response and Request objects can be found in the `this.res` and `this.req` variables of the Controller object.  Use the response object to do anything you'd normally do in an Express path. 
 
 ## Tutorial Page
 [OSMstudios Tutorial Page](http://osmstudios.com/tutorials/osmmvc)
