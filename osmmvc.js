@@ -110,8 +110,6 @@ function merge_options(obj1, obj2){
 OSMMVC.prototype._fillInput = function(params, req) {
 	var rtn = { params:[], query:[], body:[], user:{} };
 
-	console.log(params);
-	console.log(params.length);
 	// Get any additional parameters
 	if (!params && req.params) {
 		rtn.params = req.params;
@@ -163,7 +161,6 @@ OSMMVC.prototype._callController = function(controllerName, action, req, res, in
 
 	controller.setApp(self.app);
 	controller.setReq(req);
-	controller.setRes(res);
 	var opts = {
 		controller: controllerName,
 		action: action
@@ -175,20 +172,48 @@ OSMMVC.prototype._callController = function(controllerName, action, req, res, in
 
 	controller.setOpts(opts);
 
+	var output = {
+		render : function(name, opts) {
+			if (!name)
+				name = controller.opts.controller + '/' + opts.action;
+
+			if (typeof name !== 'string') {
+				opts = name;
+				name = controller.opts.controller + '/' + controller.opts.action;
+			}
+
+			var lopts = merge_options(controller.opts, opts);
+			res.render.call(res, name, lopts);
+		},
+		redirect : function(path) { res.redirect.call(res, path); },
+		sendFile : function(path) { 
+			//check if it is in our local path
+			var fpath = process.cwd() + path;
+			if (fs.existsSync(fpath)) {
+				res.sendFile.call(res, fpath);
+			} else if (fs.existsSync(path)) {
+				res.sendFile.call(res, path);
+			}
+		},
+		send : function(obj) {
+			res.send.call(res, obj);
+		},
+		res : res
+	}
 	// Get the function
 	var fn = controller[action];
 
 	if(typeof fn === 'function') {
 		if(typeof self.preload === 'function') {
-			if (self.preload.call(controller, self.app) === false)
+			if (self.preload.call(controller, self.app, input, output) === false)
 				return;
 		}
 
 		// Call the function making sure the 'this' context is the controller
-		fn.call(controller, input, self.app); // Don't forget to pass our parameters and query string
+		fn.call(controller, input, output); // Don't forget to pass our parameters and query string
 
 		if(typeof self.postload === 'function')
-			self.postload.call(controller, self.app);
+			self.postload.call(controller, self.app, input, output);
 	} else {
 		console.log("INVALID CONTROLLER ACTION");
 		console.log(controller + '[' + action + ']');
