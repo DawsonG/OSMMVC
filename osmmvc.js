@@ -175,7 +175,7 @@ OSMMVC.prototype._callController = function(controllerName, action, req, res, in
 	var output = {
 		render : function(name, opts) {
 			if (!name)
-				name = controller.opts.controller + '/' + opts.action;
+				name = controller.opts.controller + '/' + controller.opts.action;
 
 			if (typeof name !== 'string') {
 				opts = name;
@@ -198,6 +198,9 @@ OSMMVC.prototype._callController = function(controllerName, action, req, res, in
 		send : function(obj) {
 			res.send.call(res, obj);
 		},
+		respond : function(code, msg) {
+			res.status(code).send(msg);
+		},
 		res : res
 	}
 	// Get the function
@@ -216,7 +219,7 @@ OSMMVC.prototype._callController = function(controllerName, action, req, res, in
 			self.postload.call(controller, self.app, input, output);
 	} else {
 		console.log("INVALID CONTROLLER ACTION");
-		console.log(controller + '[' + action + ']');
+		console.log(controllerName + '[' + action + ']');
 		return res.status(404).send('Not found');
 	}
 };

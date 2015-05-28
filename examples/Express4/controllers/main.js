@@ -3,15 +3,15 @@ var Main = new Controller();
 
 var Supplies = require('../models/supplies');
 
-Main.index = function(input) {
+Main.index = function(input, output) {
 	var params = {
 		title : 'Main EJS'
 	};
 
-	return this.res.render('main.ejs', params);
+	return output.render('main.ejs', params);
 };
 
-Main.list = function(input) {
+Main.list = function(input, output) {
 	var self = this;
 	var params = {
 		title : 'Main/List EJS',
