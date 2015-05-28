@@ -21,23 +21,21 @@ Main.list = function(input, output) {
 	Supplies.find(function(err, results) {
 		params.supplies = results;
 
-		return self.res.render('list.ejs', params);
+		return output.render('list.ejs', params);
 	});
 };
 
-Main.add = function(input) {
-	return this.res.render('add.ejs', { title : "Add Item to Supplies Model" });
+Main.add = function(input, output) {
+	return output.render('add.ejs', { title : "Add Item to Supplies Model" });
 };
 
-Main.add_post = function(input) {
-	console.log(input);
-
+Main.add_post = function(input, output) {
 	Supplies.create({
 		name : input.body.name,
 		count: input.body.count
 	});
 
-	return this.res.redirect('/main/list?message=Item%20Added');
+	return output.redirect('/main/list?message=Item%20Added');
 };
 
 module.exports = Main;
