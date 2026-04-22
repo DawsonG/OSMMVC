@@ -11,18 +11,16 @@ Main.index = function(input, output) {
 	return output.render('main.ejs', params);
 };
 
-Main.list = function(input, output) {
+Main.list = async function(input, output) {
 	var self = this;
 	var params = {
 		title : 'Main/List EJS',
 		message: input.query.message
 	};
 
-	Supplies.find(function(err, results) {
-		params.supplies = results;
+	params.supplies = await Supplies.find();
 
-		return output.render('list.ejs', params);
-	});
+	return output.render('list.ejs', params);
 };
 
 Main.add = function(input, output) {

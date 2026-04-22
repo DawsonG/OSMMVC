@@ -12,7 +12,8 @@ app.use(express.static(__dirname + '/public'));  //serve up static content (e.g.
 app.set('views', __dirname + '/views');  //this is where your views/markup goes
 app.set('view engine', 'ejs');
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.connect('mongodb://localhost/osmmvcE2');
 var db = mongoose.connection;
